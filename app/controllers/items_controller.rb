@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :find_item, only: %i[show edit update delete]
+  before_action :find_item, only: %i[show edit update delete complete]
 
   def index
     if user_signed_in?
@@ -32,6 +32,11 @@ class ItemsController < ApplicationController
 
   def delete
     @item.destroy
+    redirect_to root_path
+  end
+
+  def complete
+    @item.update_attribute(:completed_at, Time.now)
     redirect_to root_path
   end
 
