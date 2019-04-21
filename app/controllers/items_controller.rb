@@ -2,7 +2,8 @@ class ItemsController < ApplicationController
   before_action :find_item, only: %i[show edit update delete]
 
   def index
-    @items = Item.all.order("created_at DESC")
+    if user_signed_in?
+      @items = Item.where(user_id: current_user_id).order("created_at DESC")
   end
 
   def new
