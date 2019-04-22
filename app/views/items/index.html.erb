@@ -3,9 +3,6 @@
   <div class="col-md-10 col-md-offset-1">
     <% @items.each do |item| %>
       <div class="index-wrapper">
-        <h2><%= link_to item.title, item %></h2>
-        <p><%= item.description %></p>
-
 
         <% if item.completed? %>
 <!-- for completed items -->
@@ -44,7 +41,7 @@
             <div class="col-md-8">
               <h2 class="item-title"><%= link_to item.title, item %></h2>
               <p class="item-sub-title item-desc"><%= item.description %></p>
-              <p style="opacity: 0.5;" class="time-created-at item-sub-title">Created <%= time_ago_in_words(item.completed_at) %> ago</p>
+              <p style="opacity: 0.5;" class="time-created-at item-sub-title">Created <%= time_ago_in_words(item.created_at) %> ago</p>
             </div>
 
             <div class="col-md-2">
@@ -59,5 +56,5 @@
   </div>
 
 <% else %>
-  <%= render welcome_page %>
+  <%= render 'welcome_page' %>
 <% end %>

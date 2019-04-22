@@ -1,9 +1,10 @@
 class ItemsController < ApplicationController
-  before_action :find_item, only: %i[show edit update delete complete]
+  before_action :find_item, only: %i[show edit update destroy complete]
 
   def index
     if user_signed_in?
-      @items = Item.where(user_id: current_user_id).order("created_at DESC")
+      @items = Item.where(user_id: current_user.id).order("created_at DESC")
+    end
   end
 
   def new
@@ -14,6 +15,7 @@ class ItemsController < ApplicationController
     @item = current_user.items.build(item_params)
 
     redirect_to item_path(@item) if @item.save
+    return
 
     render 'new'
   end
@@ -26,11 +28,12 @@ class ItemsController < ApplicationController
 
   def update
     redirect_to item_path(@item) if @item.update(item_params)
+    return
 
     render 'edit'
   end
 
-  def delete
+  def destroy
     @item.destroy
     redirect_to root_path
   end
